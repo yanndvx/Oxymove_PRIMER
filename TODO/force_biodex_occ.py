@@ -16,7 +16,7 @@ CALIB_ANGLE_A = -34.54
 CALIB_ANGLE_B = 100.36
 
 try:
-    from PyDAQmx import Task, DAQmx_Val_Diff, DAQmx_Val_Volts, DAQmx_Val_Rising, \
+    from PyDAQmx import Task, DAQmx_Val_RSE, DAQmx_Val_Volts, DAQmx_Val_Rising, \
                         DAQmx_Val_ContSamps, DAQmx_Val_GroupByChannel, int32, byref
     HAS_DRIVER = True
 except:
@@ -31,8 +31,8 @@ class AcquisitionThread(QtCore.QThread):
         if HAS_DRIVER:
             try:
                 self.task = Task()
-                self.task.CreateAIVoltageChan("Dev8/ai3", "Force", DAQmx_Val_Diff, -10.0, 10.0, DAQmx_Val_Volts, None)
-                self.task.CreateAIVoltageChan("Dev8/ai2", "Angle", DAQmx_Val_Diff, -10.0, 10.0, DAQmx_Val_Volts, None)
+                self.task.CreateAIVoltageChan("Dev3/ai3", "Force", DAQmx_Val_RSE, -10.0, 10.0, DAQmx_Val_Volts, None)
+                self.task.CreateAIVoltageChan("Dev3/ai2", "Angle", DAQmx_Val_RSE, -10.0, 10.0, DAQmx_Val_Volts, None)
                 self.task.CfgSampClkTiming("", FS, DAQmx_Val_Rising, DAQmx_Val_ContSamps, CHUNK)
                 self.task.StartTask()
             except: self.is_simu = True
